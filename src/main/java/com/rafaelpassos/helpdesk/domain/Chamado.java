@@ -2,7 +2,10 @@ package com.rafaelpassos.helpdesk.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.rafaelpassos.helpdesk.domain.enums.Prioridade;
+import com.rafaelpassos.helpdesk.domain.enums.Status;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -10,31 +13,38 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
+@Getter
+@Setter
 public class Chamado implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-
-
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     @JsonFormat(pattern = "dd/MM/yy")
     private LocalDate dataAbertura = LocalDate.now();
     private LocalDate dataFechamento;
     private Prioridade prioridade;
     private String titulo;
     private String observações;
-    @ManyToOne
 
-    @JoinColumn (name= "tecnico_id")
+    @ManyToOne
+    @JoinColumn(name = "tecnico_id")
     private Tecnico tecnico;
-    @JoinColumn (name= "cliente_id")
+
+    @ManyToOne
+    @JoinColumn(name = "cliente_id")
     private Cliente cliente;
+
+    // Construtor sem argumentos (necessário para o Hibernate)
     public Chamado() {
         super();
     }
 
-    public Chamado(Integer id, Prioridade prioridade, String titulo,
+    // Construtor com argumentos
+    public Chamado(Integer id, Prioridade prioridade, Status andamento, String titulo,
                    String observações, Tecnico tecnico, Cliente cliente) {
 
         this.id = id;
@@ -58,5 +68,3 @@ public class Chamado implements Serializable {
         return Objects.hashCode(id);
     }
 }
-
-

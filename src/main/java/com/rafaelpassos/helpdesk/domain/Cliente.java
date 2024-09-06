@@ -10,11 +10,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Setter
-
+@Getter
 @Entity
 public class Cliente extends Pessoa {
     @Serial
     private static final long serialVersionUID = 1L;
+
+    public Cliente() {
+        super(); // Chama o construtor da classe Pessoa
+    }
 
     @OneToMany(mappedBy = "cliente")
     private List<Chamado> chamados = new ArrayList<>();

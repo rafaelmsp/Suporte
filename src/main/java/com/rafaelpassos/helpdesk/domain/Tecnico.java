@@ -9,20 +9,24 @@ import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 
-@Setter
 @Getter
+@Setter
 @Entity
-public class Tecnico extends Pessoa{ @Serial
-private static final long serialVersionUID = 1L;
+public class Tecnico extends Pessoa {
 
-    @OneToMany (mappedBy = "tecnico")
+    @Serial
+    private static final long serialVersionUID = 1L;
+
+    @OneToMany(mappedBy = "tecnico")
     private List<Chamado> chamados = new ArrayList<>();
 
+    // Construtor sem argumentos (necessário para o JPA e Hibernate)
     public Tecnico() {
+        super(); // Chama o construtor da superclasse Pessoa
     }
 
-    public Tecnico(Integer id, String nome, String cpf, String email, String telefone) {
-        super(id, nome, cpf, email, telefone);
+    // Construtor com argumentos
+    public Tecnico(Integer id, String nome, String cpf, String email, String senha) {
+        super(id, nome, cpf, email, senha); // Chama o construtor da superclasse Pessoa
     }
-
 }
